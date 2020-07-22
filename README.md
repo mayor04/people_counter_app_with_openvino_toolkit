@@ -26,3 +26,14 @@ wget http://download.tensorflow.org/models/object_detection/faster_rcnn_inceptio
 ```
 wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
 ```
+
+The model was extracted using the following commands
+
+```
+tar -xvf faster_rcnn_inception_v2_coco_2018_01_28.tar.gz
+```
+```
+tar -xvf ssd_mobilenet_v1_coco_2018_01_28.tar.gz
+```
+
+
