@@ -49,7 +49,13 @@ Comparing the performance of a model with and without the use of the OpenVINO™
 
 | Model                                             | Speed(millisecond)  |
 | ------------------------------------------------- |--------------------:|
-| ssd_mobilenet_v1_coco(without openvino)           | $1600               |
-| ssd_mobilenet_v1_coco(with openvino)              | $12            |
-| faster_rcnn_inception_v2_coco(without openvino)   | $1     |
-| faster_rcnn_inception_v2_coco(with openvino)      | $1     |
+| ssd_mobilenet_v1_coco(without openvino)           | 235                 |
+| ssd_mobilenet_v1_coco(with openvino)              | 182                 |
+| faster_rcnn_inception_v2_coco(without openvino)   | 1245                |
+| faster_rcnn_inception_v2_coco(with openvino)      | 923                 |
+
+Output with OpenVINO™ Toolkit took less RAM and disk space than without OpenVINO™ Toolkit
+
+### Model Use Cases
+
+The application could keep track of people at a particular location. This could be used in restricted areas for checking total amount of people present, In large scale with lot of other calculation it could be used to check the number of people in an event. 
