@@ -59,3 +59,8 @@ Output with OpenVINO™ Toolkit took less RAM and disk space than without OpenVI
 ### Model Use Cases
 
 The application could keep track of people at a particular location. This could be used in restricted areas for checking total amount of people present, In large scale with lot of other calculation it could be used to check the number of people in an event. 
+
+###  Effects on End User Needs
+
+Model accuracy, and Camera focal length/image size all have effects on an end user requirement In the sense that an Inaccurate model would give a wrong calculation when counting people in the frame and A lower image size would make the the frame unclear for detection thus affecting the overall output
+
