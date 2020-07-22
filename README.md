@@ -1,3 +1,3 @@
 # People_counter_app_with_openvino_toolkit
 
-The people counter app
+The people counter application at the edge utilizes Intel® hardware and software tools for converting pre-trained models and running inference on the edge
