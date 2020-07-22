@@ -1,0 +1,1 @@
+# people_counter_app_with_openvino_toolkit
