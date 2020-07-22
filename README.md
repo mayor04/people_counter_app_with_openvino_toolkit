@@ -5,3 +5,4 @@ The people counter application at the edge utilizes Intel® hardware and softwar
 ## Process involved
 
 * Downloading and Conversion of a suitable model capable of detecting persons in a frame
+* Preprocessing the frames to the required format before 
