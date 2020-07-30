@@ -125,10 +125,11 @@ def infer_on_stream(args, client):
     total = 0
     
     detect_range = 0
+    average = 0
+    duration_count = 0
     
     ### TODO: Loop until stream is over ###
     while cap.isOpened():
-        start = int(time.time())
         # Read the next frame
         flag, frame = cap.read()
         
@@ -139,6 +140,7 @@ def infer_on_stream(args, client):
         ### TODO: Pre-process the image as needed ###
         image = preprocess(frame,shape)
         
+        start = time.time()
         ### TODO: Start asynchronous inference for specified request ###
         network.exec_rcnn(image)
         duration = None;
@@ -146,6 +148,7 @@ def infer_on_stream(args, client):
         ### TODO: Wait for the result ###
         if(network.wait()==0):
             
+            end = time.time()
             ### TODO: Get the results of the inference request ###
             output = network.get_output()
             
@@ -154,30 +157,32 @@ def infer_on_stream(args, client):
 
             ### TODO: Calculate and send relevant information on ###
             diff = persons-last_count
-            
+            duration_count+=1
+                  
             if(diff == 0):
-                detect_range = 0
+                detect_range=0
             else:
                 detect_range+=1
-                
+            
             if(detect_range > 4):
                 last_count = persons
+                
                 if(diff > 0):
-                    total = diff
+                    total += diff
+                    duration_count=0
                 else:
                     #person left based on 30 frames per seconds
-                    duration = int((detect_range / 30.0) * 1000)
-                    detect_range = 0
-                    
-               
+                    duration = duration_count/10
+                    all_dur = average*(total-1)
+                    average = (all_dur+duration)/total
+
             ### current_count, total_count and duration to the MQTT server ###
             ### Topic "person": keys of "count" and "total" ###
             client.publish("person", json.dumps({"count": persons ,"total": total}))
-            end = int(time.time())
-            
+                   
             ### Topic "person/duration": key of "duration" ### 
             if duration is not None:
-                client.publish("person/duration", json.dumps({"duration": duration}),qos=0, retain=False)
+                client.publish("person/duration", json.dumps({"duration": int(average)}),qos=0, retain=False)
 
         ### TODO: Send the frame to the FFMPEG server ###
         sys.stdout.buffer.write(frame)
@@ -193,8 +198,6 @@ def infer_on_stream(args, client):
     ### Disconnect from MQTT
     client.disconnect()    
     ### TODO: Write an output image if `single_image_mode` ###    
-
-        
 
 def draw_boxes(frame, result,thres):
     h,w,c = frame.shape
